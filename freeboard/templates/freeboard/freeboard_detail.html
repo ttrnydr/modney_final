@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block content %}
-<br><br><br>
+<br><br>
+<hr style="border: solid 5px#2d6ca2;">
 <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
@@ -20,11 +21,12 @@
                     <h1>{{object.title }}</h1>
                     <p class="card-text">{{ object.body }}</p>
                     <p><img src="{{object.star.img.url}}"></p>
+                    <p>{{object.upload_date}}</p>
                   </div>
                 </div>
               </div>
 
-          <p>{{object.upload_date}}</p>
+          
           </div>
      </div>
 </div>

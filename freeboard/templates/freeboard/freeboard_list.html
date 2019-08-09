@@ -8,18 +8,110 @@
 {% endblock %}
 
 {% block content %}
-<br><br><br>
+<br><br>
 <div id="content">
-
-    <h1>자유게시판</h1>
     
-    {% for freeboard in object_list %}
-        <h2><a href='{{ freeboard.get_absolute_url }}'>{{ freeboard.title }}</a></h2>
-        {{ freeboard.upload_date|date:"N d, Y" }}
-        <p>{{ freeboard.body}}</p>
-       <img class="recent-work-inner",src= "{{freeboard.image.url}}">
-    {% endfor %}
+    <hr style="border: solid 5px#2d6ca2;">
     
+    <table class="table table-striped">
+      
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>날짜</th>
+            <th>작성자</th>
+        </tr>
+        </thead>
+       
+        <tbody>
+      {% for freeboard in object_list %}
+        <tr>
+            <td>{{ freeboard.id }}</td>
+            <td><a href='{{ freeboard.get_absolute_url }}'>{{ freeboard.title }}</a></td>
+            <td> {{ freeboard.upload_date|date:"N d, Y" }}</td>
+            <td>{{ freeboard.owner }}</td>
+        </tr>
+      {% endfor %}
+        </tbody>
+    </table>
+    
+    <div style="float: right" class="btn-group">
+        <a class="btn btn-default" href= "{% url 'freeboard:board_add' %}">글쓰기</a>
+      </div>
 
+    <div class="text-center">
+      <ul class="pagination">
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+      </ul>
+    </div>
 </div>
+
+<li id='liSearchOption'>
+    <div class="text-center">
+        <select id='selSearchOption' >
+            <option value='A'>제목+내용</option>
+            <option value='T'>제목</option>
+            <option value='C'>내용</option>
+        </select>
+        <input id='txtKeyWord' />
+        <div class="btn-group">
+            <a class="btn btn-default" href= "#">검색</a>
+          </div>
+        
+    </div>
+    </li>
+
+
+<footer id="footer" class="midnight-blue">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="text-center">
+            <a href="#home" class="scrollup"><i class="fa fa-angle-up fa-3x"></i></a>
+          </div>
+          &copy; OnePage Theme. All Rights Reserved.
+          <div class="credits">
+            <!--
+              All the links in the footer should remain intact.
+              You can delete the links only if you purchased the pro version.
+              Licensing information: https://bootstrapmade.com/license/
+              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=OnePage
+            -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+
+        <div class="top-bar">
+          <div class="col-lg-12">
+            <div class="social">
+              <ul class="social-share">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/#footer-->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src='{% static "js/jquery.js"%}'></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src='{% static "js/bootstrap.min.js"%}'></script>
+  <script src='{% static "js/jquery.isotope.min.js"%}'></script>
+  <script src='{% static "js/wow.min.js" %}'></script>
+  <script src='{% static "js/jquery.easing.min.js" %}'></script>
+  <script src='{% static "js/main.js" %}'></script>
+  <script src='{% static "contactform/contactform.js" %}'></script>
+  
 {% endblock %}

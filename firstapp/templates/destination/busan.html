@@ -1,0 +1,187 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="utf-8"/>
+        <title>부산</title>
+</head>
+{%block content%}
+<body>
+ 
+
+        <section id="features">
+                <div class="container">
+                  <div class="row">
+                    <div class="center">
+                      <div class="col-md-6 col-md-offset-3">
+                        <h2>부산</h2>
+                        <hr>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                          ut</p>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-4 wow fadeInLeft">
+                      <h3>해운대</h3>
+                      <img src='{% static "images/busan1.jpg"  %}' width="290" height="220" alt="">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut non
+                        cupidatat skateboard dolor brunch.</p>
+                    </div>
+            
+                    <div class="col-md-4 wow fadeInUp">
+                      <h3>동백섬</h3>
+                      <img src='{% static "images/busan2.jpg" %}' width="290" height="220" alt="">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut non
+                        cupidatat skateboard dolor brunch.</p>
+                    </div>
+                   
+                    
+                    <div class="col-md-4 wow fadeInRight">
+                      <h3>광안대교</h3>
+                      <img src='{% static "images/busan3.jpg" %}' width="290" height="220" alt="">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut non
+                        cupidatat skateboard dolor brunch.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <br><br><br>
+
+
+            
+             <div id="map" style="width:700px;height:450px;margin:auto;"></div>    
+
+              <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0b136f1b8a4f3de805f045f11c068c69"></script>
+              <script>
+              var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                  mapOption = { 
+                      center: new kakao.maps.LatLng(35.1224, 129.1017), // 지도의 중심좌표
+                      level: 8 // 지도의 확대 레벨
+                  };  
+              
+              var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+              
+              
+              // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+              var linePath = [
+                  new kakao.maps.LatLng(35.1545, 129.1526),
+                  new kakao.maps.LatLng(35.1532, 129.1187),
+                  new kakao.maps.LatLng(35.1578, 129.0600),
+                  new kakao.maps.LatLng(35.1035, 129.0424)
+              ];
+              
+              // 지도에 표시할 선을 생성합니다
+              var polyline = new kakao.maps.Polyline({
+                  path: linePath, // 선을 구성하는 좌표배열 입니다
+                  strokeWeight: 4, // 선의 두께 입니다
+                  strokeColor: '#ff0000', // 선의 색깔입니다
+                  strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                  strokeStyle: 'solid' // 선의 스타일입니다
+              });
+              
+              // 지도에 선을 표시합니다 
+              polyline.setMap(map);  
+              
+
+              var markerPosition  = new kakao.maps.LatLng(35.1545, 129.1526); 
+
+              var positions = [
+    {
+        title: '1', 
+        latlng: new kakao.maps.LatLng(35.1545, 129.1526)
+    },
+    {
+        title: '2', 
+        latlng: new kakao.maps.LatLng(35.1532, 129.1187)
+    },
+    {
+        title: '3', 
+        latlng: new kakao.maps.LatLng(35.1578, 129.0600)
+    },
+    {
+        title: '4',
+        latlng: new kakao.maps.LatLng(35.1035, 129.0424)
+    }
+];
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
+              
+            
+              
+        
+              </script>
+              
+
+
+
+              
+  <footer id="footer" class="midnight-blue">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="text-center">
+            <a href="#home" class="scrollup"><i class="fa fa-angle-up fa-3x"></i></a>
+          </div>
+          &copy; OnePage Theme. All Rights Reserved.
+          <div class="credits">
+            <!--
+              All the links in the footer should remain intact.
+              You can delete the links only if you purchased the pro version.
+              Licensing information: https://bootstrapmade.com/license/
+              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=OnePage
+            -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+
+        <div class="top-bar">
+          <div class="col-lg-12">
+            <div class="social">
+              <ul class="social-share">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/#footer-->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src='{% static "js/jquery.js"%}'></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src='{% static "js/bootstrap.min.js"%}'></script>
+  <script src='{% static "js/jquery.isotope.min.js"%}'></script>
+  <script src='{% static "js/wow.min.js" %}'></script>
+  <script src='{% static "js/jquery.easing.min.js" %}'></script>
+  <script src='{% static "js/main.js" %}'></script>
+  <script src='{% static "contactform/contactform.js" %}'></script>
+  
+{%endblock%}

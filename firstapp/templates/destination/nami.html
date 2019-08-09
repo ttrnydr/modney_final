@@ -1,0 +1,128 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="utf-8"/>
+        <title>남이섬</title>
+</head>
+{%block content%}
+<body>
+ 
+
+        <section id="features">
+                <div class="container">
+                  <div class="row">
+                    <div class="center">
+                      <div class="col-md-6 col-md-offset-3">
+                        <h2>남이섬</h2>
+                        <hr>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                          ut</p>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-4 wow fadeInLeft">
+                      <h3>배</h3>
+                      <img src='{% static "images/nam1.jpg"  %}' width="290" height="220" alt="">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut non
+                        cupidatat skateboard dolor brunch.</p>
+                    </div>
+            
+                    <div class="col-md-4 wow fadeInUp">
+                      <h3>자연경관</h3>
+                      <img src='{% static "images/nam2.jpg" %}' width="290" height="220" alt="">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut non
+                        cupidatat skateboard dolor brunch.</p>
+                    </div>
+                   
+                    
+                    <div class="col-md-4 wow fadeInRight">
+                      <h3>섬</h3>
+                      <img src='{% static "images/nam3.jpg" %}' width="290" height="220" alt="">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut non
+                        cupidatat skateboard dolor brunch.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <br><br><br>
+
+
+            
+             <div id="map" style="width:700px;height:450px;margin:auto;"></div>    
+
+              <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0b136f1b8a4f3de805f045f11c068c69"></script>
+              <script>
+              var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                  mapOption = { 
+                      center: new kakao.maps.LatLng(37.7913541,127.5255418), // 지도의 중심좌표
+                      level: 4 // 지도의 확대 레벨
+                  };  
+              
+              var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+              
+              
+              // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+             
+              
+            
+              
+        
+              </script>
+              
+
+
+
+              
+  <footer id="footer" class="midnight-blue">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="text-center">
+            <a href="#home" class="scrollup"><i class="fa fa-angle-up fa-3x"></i></a>
+          </div>
+          &copy; OnePage Theme. All Rights Reserved.
+          <div class="credits">
+            <!--
+              All the links in the footer should remain intact.
+              You can delete the links only if you purchased the pro version.
+              Licensing information: https://bootstrapmade.com/license/
+              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=OnePage
+            -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+
+        <div class="top-bar">
+          <div class="col-lg-12">
+            <div class="social">
+              <ul class="social-share">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/#footer-->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src='{% static "js/jquery.js"%}'></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src='{% static "js/bootstrap.min.js"%}'></script>
+  <script src='{% static "js/jquery.isotope.min.js"%}'></script>
+  <script src='{% static "js/wow.min.js" %}'></script>
+  <script src='{% static "js/jquery.easing.min.js" %}'></script>
+  <script src='{% static "js/main.js" %}'></script>
+  <script src='{% static "contactform/contactform.js" %}'></script>
+  
+{%endblock%}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User 
 
 class Freeboard(models.Model):
     title = models.CharField(max_length=50)
@@ -7,6 +8,7 @@ class Freeboard(models.Model):
     upload_date = models.DateTimeField('up load Date', auto_now_add=True)
     image = models.ImageField(upload_to='images/')
     star = models.ForeignKey('Star',on_delete=models.CASCADE, related_name='star' ,null = True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title

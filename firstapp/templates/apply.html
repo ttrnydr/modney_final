@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>   
+</head>
+
+<body>
+    <style>
+.question{width:100%;border-top:2px solid #bdbdbd;border-bottom:2px solid #bdbdbd;font-family:"NanumGothic",sans-serif;}
+.question .qtit{text-align:left; margin:50px 0 10px 0;}
+.question tr{border-top:1px solid #cdcdcd;}
+.question tr:first-child{border-top:0;}
+.question th{background:#f6f6f6; width:20%;text-align:left; padding-left:3%}
+.question td{text-align:left;background:#fff;padding-top:1%!important;padding-bottom:1%!important;color:#5c5c5c;font-size:15px;line-height:26px;padding-left:3%}
+.question input[type="text"],
+.question select{margin-right:1%;color:#5c5c5c;line-height:12px;font-size:14px;font-family:"NanumGothic",sans-serif;background:#f6f6f6;vertical-align:middle;border:1px solid #cdcdcd;padding:1%;}
+.question select{padding:0.9%;}
+.question textarea{vertical-align:middle;border:1px solid #cdcdcd; width:94%; height:100px;background:#f6f6f6;padding:1%}
+.question label{margin-right:1%;}
+.question .button{margin-right:1%;line-height:12px;font-size:14px;font-family:"NanumGothic",sans-serif;background:#5e5e5e;vertical-align:middle;border:1px solid #5e5e5e;padding:1%; cursor:pointer;}
+.question .button a{color:#fff;}
+.question .add{margin-top:1%;}
+.question .wid10{width:10%;}
+.question .wid20{width:20%;}
+.question .wid30{width:30%;}
+.question .wid53{width:49%;}
+
+.btngreen{margin-top:30px;}
+.btngreen a{width:8%;margin:0 auto;display:block;padding:0.7em 1.5em 0.8em 1.5em;font-size:16px;color:#fff;border:1px solid #008d2d;border-radius:2em;background:#008d2d; text-align:center;letter-spacing:-0.5px; font-weight:bold;}
+.btngreen a:hover{background:#fff;color:#008d2d;}
+</style>
+
+<!-- Form -->
+<h1>신청서 작성</h1>
+
+<form method="POST" action="."> {% csrf_token %}
+<table class="question">
+    <caption class="qtit"></caption>
+        <tr>
+            <th class="th" scope="row" >학생 정보</th>
+            <td><input type="text" title="이름" class="wid20" placeholder="이름을 입력하세요" />
+            </td>
+        </tr>
+        <tr>
+            <th class="th" scope="row">연락처</th>
+            <td><select lass="wid10" title="핸드폰 앞 자리 선택">
+                <option value="010">010</option>
+                <option value="011">011</option>
+                <option value="016">016</option>
+                <option value="017">017</option>
+                <option value="018">018</option>
+                <option value="019">019</option>
+            </select><input type="text" title="전화번호 앞" maxlength="4" lass="wid20" /><input type="text"  title="전화번호뒤" maxlength="4" lass="wid20" /></td>
+        </tr>
+        <tr>
+            <th class="th" scope="row">이메일</th>
+            <td><input type="text" class="wid53" title="이메일" placeholder="예 : modeny@gmail.com"></td>
+        </tr>
+        <tr>
+            <th class="th" scope="row">주소</th>
+            <td>
+                    <input type="text" id="sample6_postcode" placeholder="우편번호">
+                    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                    <input type="text" class="add wid53" id="sample6_address" placeholder="주소"><br>
+                    <input type="text" class="add wid53" id="sample6_detailAddress" placeholder="상세주소"><br><br>
+                    <input type="text" id="sample6_extraAddress" placeholder="참고항목">
+                    
+                    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+                    <script>
+                        function sample6_execDaumPostcode() {
+                            new daum.Postcode({
+                                oncomplete: function(data) {
+                                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                    
+                                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                    var addr = ''; // 주소 변수
+                                    var extraAddr = ''; // 참고항목 변수
+                    
+                                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                                        addr = data.roadAddress;
+                                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                                        addr = data.jibunAddress;
+                                    }
+                    
+                                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                                    if(data.userSelectedType === 'R'){
+                                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                            extraAddr += data.bname;
+                                        }
+                                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                        }
+                                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                                        if(extraAddr !== ''){
+                                            extraAddr = ' (' + extraAddr + ')';
+                                        }
+                                        // 조합된 참고항목을 해당 필드에 넣는다.
+                                        document.getElementById("sample6_extraAddress").value = extraAddr;
+                                    
+                                    } else {
+                                        document.getElementById("sample6_extraAddress").value = '';
+                                    }
+                    
+                                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                    document.getElementById('sample6_postcode').value = data.zonecode;
+                                    document.getElementById("sample6_address").value = addr;
+                                    // 커서를 상세주소 필드로 이동한다.
+                                    document.getElementById("sample6_detailAddress").focus();
+                                }
+                            }).open();
+                        }
+                    </script>
+            </td>
+        </tr>
+        <tr>
+            <th class="th" scope="row">교통편 제공</th>
+            <td>
+              <p>
+                <label>
+                  <input type="radio" name="re_course" value="radio" id="program_0" value="신청">
+                  신청</label>
+                <label>
+                  <input type="radio" name="re_course" value="radio" id="program_1" value="미신청">
+                  미신청</label>
+              </p>
+        </tr>
+        <tr>
+            <th class="th" scope="row">자원봉사자</th>
+            <td>
+              <p>
+                <label>
+                  <input type="radio" name="volunteer" value="radio" id="program_0" value="신청">
+                  신청</label>
+                <label>
+                  <input type="radio" name="volunteer" value="radio" id="program_1" value="미신청">
+                  미신청</label>
+              </p>
+        </tr>
+        <tr>
+            <th class="th" scope="row">장애 유형</th>
+            <td>
+              <p>
+                <label>
+                  <input type="radio" name="re_course" value="radio" id="program_0" value="종류1">
+                  시각</label>
+                <label>
+                  <input type="radio" name="re_course" value="radio" id="program_1" value="종류2">
+                  청각</label>
+               <label>
+                  <input type="radio" name="re_course" value="radio" id="program_2" value="종류3">
+                  지체</label>
+                <label>
+                  <input type="radio" name="re_course" value="radio" id="program_3" value="종류4">
+                  기타</label>
+              </p>
+        </tr>
+        <tr>
+            <th class="th" scope="row">희망여행코스</th>
+            <td><select class="wid30" title="카테고리 선택">
+                <option value="1">서울</option>
+                <option value="2">경기</option>
+                <option value="3">부산</option>
+                <option value="4">순천</option>
+            </select>
+        </tr>
+        <tr>
+            <th class="th" scope="row">요청사항</th>
+            <td>
+                <textarea title="문의사항" placeholder="200자 이내(400byte)로 입력해 주세요"></textarea>
+            </td>
+        </tr>
+  </table>
+           
+      <div class="btngreen">
+          <a href="/" class="Btn">신청하기</a>
+      </div>
+</form>
+<!-- //Form -->
+
+</body>
+</html>
